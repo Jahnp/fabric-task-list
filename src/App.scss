@@ -1,0 +1,58 @@
+@import '../node_modules/office-ui-fabric-react/dist/sass/_Fabric.Common';
+
+$App-sectionPadding: 20px 28px;
+$App-border: 1px solid $ms-color-neutralLight;
+
+.App {
+  background-color: rgba(255,255,255,0.75);
+  border: $App-border;
+  box-shadow: 0 0 20px -4px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  max-width: 580px;
+  width: 90vw;
+}
+
+.App-header {
+  border-bottom: $App-border;
+  flex-grow: 0;
+  font-size: $ms-font-size-su;
+  font-weight: $ms-font-weight-light;
+  margin: 0;
+  padding: $App-sectionPadding;
+  text-align: center;
+}
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: $App-sectionPadding;
+}
+
+.App-createTask {
+  display: flex;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.App-createTask-field {
+  @include margin(0, 10px, 0, 0);
+  flex-grow: 1;
+}
+
+.App-createTask-button {
+  flex-shrink: 0;
+}
+
+.App-taskList {
+  overflow: auto;
+  flex-grow: 1;
+}
+
+.App-footer {
+  border-top: $App-border;
+  flex-grow: 0;
+  padding: $App-sectionPadding;
+}

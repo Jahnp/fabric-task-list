@@ -1,0 +1,50 @@
+/*
+  Your use of the content in the files referenced here are subject to the terms of the license at http://aka.ms/fabric-font-license
+*/
+.App {
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 20px -4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  max-width: 580px;
+  width: 90vw; }
+
+.App-header {
+  border-bottom: 1px solid #eaeaea;
+  flex-grow: 0;
+  font-size: 42px;
+  font-weight: 100;
+  margin: 0;
+  padding: 20px 28px;
+  text-align: center; }
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 20px 28px; }
+
+.App-createTask {
+  display: flex;
+  flex-shrink: 0;
+  margin-bottom: 8px; }
+
+.App-createTask-field {
+  margin: 0 10px 0 0;
+  flex-grow: 1; }
+  [dir='rtl'] .App-createTask-field {
+    margin: 0 0 0 10px; }
+
+.App-createTask-button {
+  flex-shrink: 0; }
+
+.App-taskList {
+  overflow: auto;
+  flex-grow: 1; }
+
+.App-footer {
+  border-top: 1px solid #eaeaea;
+  flex-grow: 0;
+  padding: 20px 28px; }

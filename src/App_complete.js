@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import {
-  Fabric
+  Fabric,
+  Checkbox,
+  TextField,
+  PrimaryButton,
+  ProgressIndicator
 } from 'office-ui-fabric-react/lib/';
 import TaskManager from './TaskManager';
 import './App.css';
@@ -31,8 +35,27 @@ class App extends Component {
   _renderCreateTask() {
     return (
       <div className="App-createTask">
-        [Text field to describe the task.]
-        [Button to add the task.]
+        <TextField
+          className='App-createTask-field'
+          onChanged={ (value) => (
+            this.setState({
+              inputValue: value
+            })
+          ) }
+          onKeyDown={
+            (event) => {
+              if (event.key === 'Enter') {
+                this._addTask();
+              }
+            }
+          }
+          placeholder='Add a new task' 
+          value={ this.state.inputValue } />
+        <PrimaryButton
+          className='App-createTask-button'
+          onClick={ () => this._addTask() }>
+          Add task
+        </PrimaryButton>
       </div>
     );
   }
@@ -44,7 +67,12 @@ class App extends Component {
           this.state.tasks.map(
             task => {
               return (
-                <div>[{ task.title }]</div>
+                <Checkbox
+                  checked={ task.completed }
+                  key={ task.id }
+                  label={ task.title }
+                  name={ task.id }
+                  onChange={ (event, checked) => this._toggleTaskCompleted(event.target.name) } />
               );
             }
           )
@@ -55,7 +83,10 @@ class App extends Component {
 
   _renderProgress() {
     return (
-      <div>[Progress indicator]</div>
+      <ProgressIndicator
+        label='Your progress'
+        description={ `${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed` }
+        percentComplete={ this._TaskManager.getTasksPercentComplete() } />
     );
   }
 

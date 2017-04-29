@@ -1,134 +1,205 @@
-# Get started with Fabric React
+# Fabric Task List
+## About this tutorial
 
-In this tutorial, you'll be creating a simple to-do list web app using [Fabric React](http://dev.office.com/fabric). You'll use components like PeoplePicker, DatePicker, and Button to create a user interface that fits seamlessly into Office.
+You'll be creating a simple task list using [Office UI Fabric React](http://dev.office.com/fabric). Fabric React allows you to build your application with the same components that Microsoft uses across Office and Office 365. In this tutorial, you'll use components like TextField, CheckBox, and ProgressIndicator to quickly create an application that fits seamlessly into the Office experience.
 
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). For more details, see create-react-app.md
+So that you can focus on the fundamentals of working with Fabric React, rather than setting up and using a build system, we've bootstrapped this project using [Create React App](https://github.com/facebookincubator/create-react-app). This tool is highly recommended for quickly starting React apps, including those that use Fabric React. For more details, see the [Create React App README](/blob/master/CREATE-REACT-APP.md).
 
 ## Prerequisites
 
-To get started, you'll need: 
+This tutorial is aimed at developers of all skill levels. You'll be provided with all of the code you need and step-by-step instructions on how to assemble the app. If you don't understand something, refer to the [resources](#resources) below to learn more.
 
-- [Node.js with npm](https://nodejs.org/en/download/) 
-- The [Microsoft Connect Sample for Node.js](https://github.com/microsoftgraph/nodejs-connect-rest-sample). You'll use the **starter-project** folder in the sample files for this walkthrough.
+To get started, you'll need:
 
-## Creating an app
-[Create React App](https://github.com/facebookincubator/create-react-app) is a quick way to set up a new React project with a build system, without having to deal with configuration.
+- [Git](https://git-scm.com/) to clone this repository
+- [Node.js with npm](https://nodejs.org/en/download/) to install the dependencies
+
+## Getting set up
+Open your terminal or command prompt and navigate to the folder where you want to work on this project. You can then clone the repository:
 
 ```
-npm install -g create-react-app
+git clone https://github.com/mikewheaton/fabric-task-list.git
+```
 
-create-react-app fabric-react-todo
-cd fabric-react-todo/
+That command copied all of the files from this repository into a subfolder named `fabric-task-list`. To move into that folder, run:
 
-npm --save install office-ui-fabric-react
-npm --save install office-ui-fabric-core
+```
+cd fabric-task-list
+```
 
+Before you can start the app, you'll first need to install all of the NPM dependencies. If you open `package.json` you'll see that Fabric React is one of those dependencies. To download and install everything you'll need to build the app, run:
+
+```
+npm install
+```
+
+To start the app, run:
+
+```
 npm start
 ```
 
-The web browser will open with a "Welcome to React" message displayed. You're ready to go!
+This will build the app and launch it in your default browser. As you make changes to files throughout this tutorial, the app will automatically rebuild and update in the browser.
 
-## Importing Fabric React
-Replace the contents of `App.js` with the following:
+We've included a basic app structure to get you started quickly, with text in square brackets indicating a placeholder for a Fabric React component. By the end of this tutorial, you will have replaced each of those placeholders with a component and wired those components together into a working app.
 
+## Displaying a Checkbox for each task
+
+You'll see a list of three tasks (e.g. [Wash the car]) in the middle of the app. These tasks come from `TaskManager.js`, which pre-populates the task list and provides basic functions for getting, adding, and updating tasks. Let's display the tasks using a [Checkbox](http://dev.office.com/fabric#/components/checkbox) component, which will allow us to mark a task as completed later.
+
+Before we can use the Checkbox, we first need to import it. At the top of `App.js`, modify the import statement for Fabric React to include the Checkbox:
+
+```diff
+  import {
+    Fabric,
++   Checkbox
+  } from 'office-ui-fabric-react/lib/';
 ```
-import React, { Component } from 'react';
-import { Button } from 'office-ui-fabric-react/lib/Button';
-import './App.css';
 
-class App extends Component {
-  render() {
+Note that the Fabric component is included by default. This component must be a parent of all other Fabric React components, as it's responsible for things like managing focus state for keyboard users. In this app, you'll see it used at the top of the `render` function.
+
+The `_renderTaskList` function returns a `<div>` containing all of the tasks. Modify the `map` method to return a list of Checkbox components, rather than plain text:
+
+```diff
+  this.state.tasks.map(
+    task => {
+      return (
+-       <div>[{ task.title }]</div>
++       <Checkbox
++         checked={ task.completed }
++         key={ task.id }
++         label={ task.title }
++         name={ task.id }
++         onChange={(event, checked) => this._toggleTaskCompleted(event.target.name) } />
+      );
+    }
+  )
+```
+
+What's going on in this code? The app has a state variable of `tasks`, which contains an array of tasks. Each task has the properties `id`, `title`, and `completed`. Any time this array is modified, React will re-render our application to show the updated tasks. Using the array's [map method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example), we convert each task object into a Checkbox component. Let's examine each of the props in use:
+
+- `checked`
+  - Whether the Checkbox is checked or not. This comes from the task's `completed` property.
+- `label`
+  - The text shown for the Checkbox. This comes from the task's `title` property.
+- `onChange`
+  - Called whenever the user checks or unchecks a box. Note how we're using the `name` property to determine which box was changed, so that we update the right task.
+
+With that change made, save the file and your browser should reload with Checkbox components.
+
+## Adding new tasks
+
+Let's make it so that users can add new tasks to the list. To do this, we'll need to use two Fabric React components. First, we'll need a TextField to allow them to input the task name. Second, a PrimaryButton to submit the task and have it added to the list.
+
+We can import these components the same as we did for Checkbox above. At the top of `App.js`, modify the import statement for Fabric React to include both:
+
+```diff
+  import {
+    Fabric,
+    Checkbox,
++   TextField,
++   PrimaryButton
+  } from 'office-ui-fabric-react/lib/';
+```
+
+Both of these components will be placed inside the `_renderCreateTask` function, which returns a `<div>` containing the form to create a new task. Let's modify that function to include a basic TextField:
+
+```diff
+  _renderCreateTask() {
     return (
-      <div className="Tasks">
-        <div className="Tasks-header">
-          <h1>Fabric React Task List</h1>
-        </div>
-        <Button>Add task</Button>
+      <div className="App-createTask">
+-       [Text field to describe the task.]
++       <TextField
++         className='App-createTask-field'
++         onChanged={ (value) => (
++           this.setState({
++             inputValue: value
++           })
++         ) }
++         onKeyDown={
++           (event) => {
++             if (event.key === 'Enter') {
++               this._addTask();
++             }
++           }
++         }
++         placeholder='Add a new task' 
++         value={ this.state.inputValue } />
+        [Button to add the task.]
       </div>
     );
   }
-}
-
-export default App;
 ```
 
-Save the file and your browser will refresh automatically. The "Add task" button that you see is a Fabric React component. That's all there is to it! You'll use this button later when it's time to add a task to the list. Review the code you copied in to see how the components are imported and used.
+With this change, we've added a TextField component with a few props:
 
-## Show a list of to-dos
-Let's add a simple array of tasks, which we can display and then later modify. Add this within your `App` class, above the `render()` function:
+- `className`
+  - Most Fabric React components allow you to pass in a CSS class name, which is useful for applying your own custom styles.
+- `placeholder`
+  - This instructional text will be shown before the user enters text.
+- `value`
+  - Text entered by the user, or set by the app.
+- `onChanged`
+  - Whenever the text value changes, we update the app's state to hold the new value.
+- `onKeyDown`
+  - This function is called whenever the user presses a key in the TextField. In this case, we listen for the enter key to be pressed and add the task.
 
-```
-tasks = [
-  {
-    title: 'Create an app',
-    done: false
-  },
-  {
-    title: 'Import Fabric React',
-    done: false
-  },
-  {
-    title: 'Show a list of to-dos',
-    done: false
+Now let's add a button to create the task. There are several types of [Buttons provided by Fabric React](http://dev.office.com/fabric#/components/button) to choose from. For this app, we'll use the PrimaryButton component so that we get a very prominent button.
+
+Modify the `_renderCreateTask` function to include the button:
+
+```diff
+  _renderCreateTask() {
+    return (
+      <div className="App-createTask">
+        <TextField ... />
+-       [Button to add the task.]
++       <PrimaryButton
++         className='App-createTask-button'
++         onClick={ () => this._addTask() }>
++         Add task
++       </PrimaryButton>
+      </div>
+    );
   }
-];
 ```
 
-While we could simply loop through these and display them, Fabric's [List component](http://dev.office.com/fabric#/components/list) gives us some more advanced functionality that may be useful later on. Directly above the Button, add this code:
+The only property to note on the button is `onClick`, which takes a function that will be called whenever the button is clicked. Here we have it call the `_addTask` function to add a task, using the text value stored in our app's state.
 
-```
-<List
-  items={ this.tasks }
-  onRenderCell={ (task) => (
-    <div>{ task.title }</div>
-  ) } />
-```
+## Showing progress with ProgressIndicator
 
-We now have a basic list of tasks!
+We now have a working task list, with the ability to add items and mark items and completed. To make this example a little more interesting, let's use a [ProgressIndicator component](http://dev.office.com/fabric#/components/progressindicator) to show the user how they are doing.
 
-Let's improve the styling of this page. We'll start by adding a reference to Fabric Core, which contains the colors, fonts, icons, and other useful styles. In `public/index.html`, add the following to the `<head>`:
+Once again, we modify the import statement at the top of `App.js` to include the component we want to use:
 
-```
-<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/6.0.0/css/fabric.min.css">
-```
-
-Now replace the contents of `App.css` with the following:
-
-```
-.TaskApp {
-
-}
-
-.TaskApp-header {
-
-}
-
-.TaskList {
-
-}
-
-.Task {
-  padding: 20px;
-}
-
-.Task--done {
-  background: blue;
-}
+```diff
+  import {
+    Fabric,
+    Checkbox,
+    TextField,
+    PrimaryButton,
++   ProgressIndicator
+  } from 'office-ui-fabric-react/lib/';
 ```
 
-That's looking much better.
+With that imported, we can update the `_renderProgress` function to show the ProgressIndicator:
 
-## Add a to-do
+```diff
+  _renderProgress() {
+    return (
+-     <div>[Progress indicator]</div>
++     <ProgressIndicator
++       label='Your progress'
++       description={ `${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed` }
++       percentComplete={ this._TaskManager.getTasksPercentComplete() } />
+    );
+  }
+```
+## Conclusion and next steps
+That's all there is to it! You've now built a simple app using five Fabric React components. To continue learning, we invite you to:
 
-## Complete a to-do
-
-## Next steps
-
-- Browse the other [components](http://dev.office.com/fabric#/components) that you can use.
-- Add additional functionality, such as...
-
-
-## Resources
-
-- [Office UI Fabric](http://dev.office.com/fabric)
-- [Fabric React on GitHub](https://github.com/OfficeDev/office-ui-fabric-react)
+- Browse the full list of [Fabric React components](http://dev.office.com/fabric#/components) that you can use in your apps.
+- Add additional functionality, such as a [MessageBar](http://dev.office.com/fabric#/components/messagebar) to display a success message when all of the tasks are complete.
+- Explore the [styles included in Fabric Core](http://dev.office.com/fabric#/styles) that you can use to add animations, colors, icons, fonts, and more that allow your app to fit in seamlessly with the rest of Office.
+- View [Fabric React's GitHub repo](https://github.com/OfficeDev/office-ui-fabric-react) to see what's new in recent releases and to file an issue should you run into any difficulty.
+- Follow [Fabric on Twitter](https://twitter.com/officeuifabric) for all of the latest updates.

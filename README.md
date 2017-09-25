@@ -3,7 +3,7 @@
 ![Screenshot of the completed task list app](https://github.com/mikewheaton/fabric-task-list/blob/master/screenshot.png)
 ## About this tutorial
 
-You'll be creating a simple task list using [Office UI Fabric React](http://dev.office.com/fabric). Fabric React allows you to build your application with the same components that Microsoft uses across Office and Office 365. In this tutorial, you'll use components like TextField, CheckBox, and ProgressIndicator to quickly create an application that fits seamlessly into the Office experience.
+You'll be creating a simple task list using [Office UI Fabric React](http://dev.office.com/fabric). Fabric React allows you to build your application with the same components that Microsoft uses across Office and Office 365. In this tutorial, you'll use components like TextField, Checkbox, and ProgressIndicator to quickly create an application that fits seamlessly into the Office experience.
 
 So that you can focus on the fundamentals of working with Fabric React, rather than setting up and using a build system, we've bootstrapped this project using [Create React App](https://github.com/facebookincubator/create-react-app). This tool is highly recommended for quickly starting React apps, including those that use Fabric React. For more details, see the [Create React App README](/blob/master/CREATE-REACT-APP.md).
 
@@ -45,29 +45,29 @@ This will build the app and launch it in your default browser. As you make chang
 
 We've included a basic app structure to get you started quickly, with text in square brackets indicating a placeholder for a Fabric React component. By the end of this tutorial, you will have replaced each of those placeholders with a component and wired those components together into a working app.
 
-## Displaying a CheckBox for each task
+## Displaying a Checkbox for each task
 
-You'll see a list of three tasks (e.g. [Wash the car]) in the middle of the app. These tasks come from `TaskManager.js`, which pre-populates the task list and provides basic functions for getting, adding, and updating tasks. Let's display the tasks using a [CheckBox](http://dev.office.com/fabric#/components/checkbox) component, which will allow us to mark a task as completed later.
+You'll see a list of three tasks (e.g. [Wash the car]) in the middle of the app. These tasks come from `TaskManager.js`, which pre-populates the task list and provides basic functions for getting, adding, and updating tasks. Let's display the tasks using a [Checkbox](http://dev.office.com/fabric#/components/checkbox) component, which will allow us to mark a task as completed later.
 
-Before we can use the CheckBox, we first need to import it. At the top of `App.js`, modify the import statement for Fabric React to include the CheckBox:
+Before we can use the Checkbox, we first need to import it. At the top of `App.js`, modify the import statement for Fabric React to include the Checkbox:
 
 ```diff
   import {
     Fabric,
-+   CheckBox
++   Checkbox
   } from 'office-ui-fabric-react/lib/';
 ```
 
 Note that the Fabric component is included by default. This component must be a parent of all other Fabric React components, as it's responsible for things like managing focus state for keyboard users. In this app, you'll see it used at the top of the `render` function.
 
-The `_renderTaskList` function returns a `<div>` containing all of the tasks. Modify the `map` method to return a list of CheckBox components, rather than plain text:
+The `_renderTaskList` function returns a `<div>` containing all of the tasks. Modify the `map` method to return a list of Checkbox components, rather than plain text:
 
 ```diff
   this.state.tasks.map(
     task => {
       return (
 -       <div>[{ task.title }]</div>
-+       <CheckBox
++       <Checkbox
 +         checked={ task.completed }
 +         key={ task.id }
 +         label={ task.title }
@@ -78,27 +78,27 @@ The `_renderTaskList` function returns a `<div>` containing all of the tasks. Mo
   )
 ```
 
-What's going on in this code? The app has a state variable of `tasks`, which contains an array of tasks. Each task has the properties `id`, `title`, and `completed`. Any time this array is modified, React will re-render our application to show the updated tasks. Using the array's [map method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example), we convert each task object into a CheckBox component. Let's examine each of the props in use:
+What's going on in this code? The app has a state variable of `tasks`, which contains an array of tasks. Each task has the properties `id`, `title`, and `completed`. Any time this array is modified, React will re-render our application to show the updated tasks. Using the array's [map method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example), we convert each task object into a Checkbox component. Let's examine each of the props in use:
 
 - `checked`
-  - Whether the CheckBox is checked or not. This comes from the task's `completed` property.
+  - Whether the Checkbox is checked or not. This comes from the task's `completed` property.
 - `label`
-  - The text shown for the CheckBox. This comes from the task's `title` property.
+  - The text shown for the Checkbox. This comes from the task's `title` property.
 - `onChange`
   - Called whenever the user checks or unchecks a box. Note how we're using the `name` property to determine which box was changed, so that we update the right task.
 
-With that change made, save the file and your browser should reload with CheckBox components.
+With that change made, save the file and your browser should reload with Checkbox components.
 
 ## Adding new tasks
 
 Let's make it so that users can add new tasks to the list. To do this, we'll need to use two Fabric React components. First, we'll need a TextField to allow them to input the task name. Second, a PrimaryButton to submit the task and have it added to the list.
 
-We can import these components the same as we did for CheckBox above. At the top of `App.js`, modify the import statement for Fabric React to include both:
+We can import these components the same as we did for Checkbox above. At the top of `App.js`, modify the import statement for Fabric React to include both:
 
 ```diff
   import {
     Fabric,
-    CheckBox,
+    Checkbox,
 +   TextField,
 +   PrimaryButton
   } from 'office-ui-fabric-react/lib/';
@@ -177,7 +177,7 @@ Once again, we modify the import statement at the top of `App.js` to include the
 ```diff
   import {
     Fabric,
-    CheckBox,
+    Checkbox,
     TextField,
     PrimaryButton,
 +   ProgressIndicator

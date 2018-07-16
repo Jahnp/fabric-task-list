@@ -1,5 +1,7 @@
 # Fabric Task List
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mikewheaton/fabric-task-list.svg)](https://greenkeeper.io/)
+
 ![Screenshot of the completed task list app](https://github.com/mikewheaton/fabric-task-list/blob/master/screenshot.png)
 ## About this tutorial
 

@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import {
-  Fabric
+  Fabric,
+  Checkbox,
+  TextField,
+  PrimaryButton,
+  ProgressIndicator,
+  Customizer
 } from 'office-ui-fabric-react/lib/';
+import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+import { FluentCustomizations } from '@uifabric/experiments/lib/components/fluent/FluentCustomizations';
+
 import TaskManager from './TaskManager';
 import './App.css';
+
+initializeIcons();
 
 class App extends Component {
   _TaskManager = new TaskManager();
@@ -15,24 +25,45 @@ class App extends Component {
 
   render() {
     return (
-      <Fabric className="App">
-        <h1 className="App-header">Task List</h1>
-        <div className="App-main">
-          { this._renderCreateTask() }
-          { this._renderTaskList() }
-        </div>
-        <div className="App-footer">
-          { this._renderProgress() }
-        </div>
-      </Fabric>
+      <Customizer {...FluentCustomizations}>
+        <Fabric className="App">
+          <h1 className="App-header">Task List</h1>
+          <div className="App-main">
+            {this._renderCreateTask()}
+            {this._renderTaskList()}
+          </div>
+          <div className="App-footer">
+            {this._renderProgress()}
+          </div>
+        </Fabric>
+      </Customizer>
     );
   }
 
   _renderCreateTask() {
     return (
       <div className="App-createTask">
-        [Text field to describe the task.]
-        [Button to add the task.]
+        <TextField
+          className='App-createTask-field'
+          onChange={(event) => (
+            this.setState({
+              inputValue: event.target.defaultValue
+            })
+          )}
+          onKeyDown={
+            (event) => {
+              if (event.key === 'Enter') {
+                this._addTask();
+              }
+            }
+          }
+          placeholder='Add a new task'
+          value={this.state.inputValue} />
+        <PrimaryButton
+          className='App-createTask-button'
+          onClick={() => this._addTask()}>
+          Add task
+        </PrimaryButton>
       </div>
     );
   }
@@ -42,9 +73,17 @@ class App extends Component {
       <div className='App-taskList'>
         {
           this.state.tasks.map(
-            task => {
+            task => {            
               return (
-                <div>[{ task.title }]</div>
+                <Checkbox
+                  checked={task.completed}
+                  key={task.id}
+                  label={task.title}
+                  name={task.id}
+                  onChange={(event, checked) => {
+                    console.log(task.id);
+                    this._toggleTaskCompleted(task.id)
+                  }} />
               );
             }
           )
@@ -55,7 +94,10 @@ class App extends Component {
 
   _renderProgress() {
     return (
-      <div>[Progress indicator]</div>
+      <ProgressIndicator
+        label='Your progress'
+        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
+        percentComplete={this._TaskManager.getTasksPercentComplete()} />
     );
   }
 
@@ -67,7 +109,7 @@ class App extends Component {
       inputValue: ''
     });
   }
-  
+
   _toggleTaskCompleted(taskId) {
     this._TaskManager.toggleTaskCompleted(taskId);
 

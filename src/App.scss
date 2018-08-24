@@ -49,6 +49,10 @@ $App-border: 1px solid $ms-color-neutralLight;
 .App-taskList {
   overflow: auto;
   flex-grow: 1;
+
+  .ms-Checkbox {
+    margin-bottom: 5px;
+  }
 }
 
 .App-footer {

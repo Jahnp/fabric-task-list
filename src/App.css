@@ -44,7 +44,12 @@
   overflow: auto;
   flex-grow: 1; }
 
+.App-taskList .ms-Checkbox {
+  margin-bottom: 5px; 
+}
+  
 .App-footer {
   border-top: 1px solid #eaeaea;
   flex-grow: 0;
-  padding: 20px 28px; }
+  padding: 20px 28px; 
+}

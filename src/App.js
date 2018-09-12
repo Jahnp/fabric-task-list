@@ -5,15 +5,49 @@ import {
   TextField,
   PrimaryButton,
   ProgressIndicator,
-  Customizer
+  Customizer,
+  IconButton,
+  IPersonaSharedProps, 
+  Persona, 
+  PersonaSize, 
+  PersonaPresence,
+  PersonaInitialsColor,
+  Pivot,
+  PivotItem,
+  DocumentCard,
+  DocumentCardActivity,
+  DocumentCardPreview,
+  DocumentCardTitle,
+  IDocumentCardPreviewProps
 } from 'office-ui-fabric-react/lib/';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { FluentCustomizations } from '@uifabric/experiments/lib/components/fluent/FluentCustomizations';
 
+
 import TaskManager from './TaskManager';
 import './App.css';
 
+
 initializeIcons();
+
+const examplePersona: IPersonaSharedProps = {
+  secondaryText: 'Designer',
+  tertiaryText: 'In a meeting',
+  optionalText: 'Available at 4:00pm',
+  showSecondaryText: true
+};
+
+const personaWithInitials: IPersonaSharedProps = {
+  ...examplePersona,
+  text: 'Maor Sharett',
+  imageInitials: 'MS',
+  secondaryTEXT: 'Designer',
+  showSecondaryText: true
+
+};
+ 
+
+
 
 class App extends Component {
   _TaskManager = new TaskManager();
@@ -27,7 +61,37 @@ class App extends Component {
     return (
       <Customizer {...FluentCustomizations}>
         <Fabric className="App">
-          <h1 className="App-header">Task List</h1>
+        <div className="App-header">
+          <div>
+            <h1 className="App-title">Team Tasks</h1>
+            <div className="App-description">
+             <TextField
+              borderless
+              placeholder="Describe your list"
+              />
+            </div>
+              <IconButton
+                className='App-close'
+                iconProps={{ iconName: 'Cancel' }}
+                title="Cancel"
+                ariaLabel="Cancel"/>
+          </div>
+          <div className="App-pivot">
+            <Pivot>
+              <PivotItem
+                headerText="All Tasks"
+                linkText="I am deprecated. &quot;headerText&quot; overwrites me"
+                headerButtonProps={{
+                  'data-order': 1,
+                  'data-title': 'My Files Title'
+                }}
+                >
+              </PivotItem>
+              <PivotItem linkText="Completed">
+              </PivotItem>
+              </Pivot>
+          </div>
+        </div>
           <div className="App-main">
             {this._renderCreateTask()}
             {this._renderTaskList()}
@@ -75,7 +139,8 @@ class App extends Component {
           this.state.tasks.map(
             task => {            
               return (
-                <Checkbox
+                <div>
+                  <Checkbox
                   checked={task.completed}
                   key={task.id}
                   label={task.title}
@@ -84,6 +149,16 @@ class App extends Component {
                     console.log(task.id);
                     this._toggleTaskCompleted(task.id)
                   }} />
+                  <div className="App-persona">
+                    <div className="ms-PersonaExample">
+                    <Persona {...examplePersona} 
+                      initialsColor={PersonaInitialsColor.black}
+                      size={PersonaSize.size32}
+                      presence={PersonaPresence.online}
+                      text="Annie Lindqvist" />
+                    </div>
+                  </div>
+                </div>
               );
             }
           )
@@ -95,7 +170,7 @@ class App extends Component {
   _renderProgress() {
     return (
       <ProgressIndicator
-        label='Your progress'
+        label='Your teams progress'
         description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
         percentComplete={this._TaskManager.getTasksPercentComplete()} />
     );
@@ -118,5 +193,7 @@ class App extends Component {
     });
   }
 }
+
+
 
 export default App;

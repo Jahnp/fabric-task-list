@@ -12,13 +12,38 @@
   width: 90vw; }
 
 .App-header {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.App-title {
+  flex-grow: 0;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  padding: 20px 28px 0 28px;
+  text-align: left; 
+}
+
+.App-description {
   border-bottom: 1px solid #eaeaea;
   flex-grow: 0;
-  font-size: 42px;
-  font-weight: 100;
   margin: 0;
-  padding: 20px 28px;
-  text-align: center; }
+  padding: 0 0 20px 20px;
+}
+
+.App-close {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-top: 14px;
+  padding-right: 14px;
+  padding-bottom: 0px;
+  padding-left: 0px;}
 
 .App-main {
   display: flex;
@@ -26,10 +51,15 @@
   flex-grow: 1;
   padding: 20px 28px; }
 
+.App-pivot {
+  display: flex;
+  padding: 0 20px;
+}
+
 .App-createTask {
   display: flex;
   flex-shrink: 0;
-  margin-bottom: 8px; }
+  margin-bottom: 10px; }
 
 .App-createTask-field {
   margin: 0 10px 0 0;
@@ -45,11 +75,21 @@
   flex-grow: 1; }
 
 .App-taskList .ms-Checkbox {
-  margin-bottom: 5px; 
+  margin-bottom: 14px; 
+  margin-top: 24px;
+}
+
+.App-persona {
+  padding-left: 24px;
+  padding-bottom: 2px;
 }
   
 .App-footer {
   border-top: 1px solid #eaeaea;
   flex-grow: 0;
   padding: 20px 28px; 
+}
+
+.TaskCard {
+  
 }

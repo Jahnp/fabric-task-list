@@ -13,12 +13,7 @@ import {
   PersonaPresence,
   PersonaInitialsColor,
   Pivot,
-  PivotItem,
-  DocumentCard,
-  DocumentCardActivity,
-  DocumentCardPreview,
-  DocumentCardTitle,
-  IDocumentCardPreviewProps
+  PivotItem
 } from 'office-ui-fabric-react/lib/';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { FluentCustomizations } from '@uifabric/experiments/lib/components/fluent/FluentCustomizations';
@@ -30,24 +25,12 @@ import './App.css';
 
 initializeIcons();
 
-const examplePersona: IPersonaSharedProps = {
+const examplePersona = {
   secondaryText: 'Designer',
   tertiaryText: 'In a meeting',
   optionalText: 'Available at 4:00pm',
   showSecondaryText: true
 };
-
-const personaWithInitials: IPersonaSharedProps = {
-  ...examplePersona,
-  text: 'Maor Sharett',
-  imageInitials: 'MS',
-  secondaryTEXT: 'Designer',
-  showSecondaryText: true
-
-};
- 
-
-
 
 class App extends Component {
   _TaskManager = new TaskManager();
@@ -169,10 +152,7 @@ class App extends Component {
 
   _renderProgress() {
     return (
-      <ProgressIndicator
-        label='Your teams progress'
-        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
-        percentComplete={this._TaskManager.getTasksPercentComplete()} />
+      'Progress should go here'
     );
   }
 

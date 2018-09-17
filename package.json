@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@uifabric/experiments": "^6.27.0",
-    "office-ui-fabric-react": "^6.52.0",
+    "@uifabric/experiments": "^6.30.1",
+    "office-ui-fabric-react": "^6.69.0",
+    "office-ui-fabric-core": "9.6.0-fluent16",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

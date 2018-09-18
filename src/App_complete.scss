@@ -1,7 +1,7 @@
 /* 
   Import Fabric Core references.
   To preview using the Fluent styles, make sure to use the Fluent releases.
-  For example, if you're using npm, add this to package.json:
+  If you're using npm, add this to package.json:
   {
     "dependencies": {
       "office-ui-fabric-core": "^9.6.0-fluent16"
@@ -25,8 +25,8 @@ $App-border: 1px solid $ms-color-neutralLight;
   width: 90vw;
   position: relative;
 
-  // Use a Fabric Core depth mixin to add a Fluent drop shadow.
-  // @include ms-depth-8;
+  // Add a Fluent-style box shadow
+  @include ms-depth-8;
 }
 
 .App-header {
@@ -35,19 +35,17 @@ $App-border: 1px solid $ms-color-neutralLight;
   box-sizing: border-box;
 }
 
-.App-titleBlock {
-  margin-top: 20px;
-}
-
 .App-title {
   flex-grow: 0;
+  font-size: 28px;
+  font-weight: 600;
   margin: 0;
   padding: 20px 28px 0 28px;
   text-align: left;
 
-  // Use Fabric Core Typography mixins to add Fluent text styles.
-  // @include ms-fontSize-28;
-  // @include ms-fontWeight-semibold;
+  // Add some Fluent text styles
+  @include ms-fontSize-28;
+  @include ms-fontWeight-semibold;
 }
 
 .App-description {

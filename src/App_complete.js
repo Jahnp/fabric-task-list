@@ -42,7 +42,7 @@ class App extends Component {
         <Fabric className="App">
           <div className="App-header">
             <div className="App-titleBlock">
-              <h1 className="App-title">Team Tasks</h1>
+              <span className="App-title">Team Tasks</span>
               <div className="App-description">
                 <TextField
                   borderless

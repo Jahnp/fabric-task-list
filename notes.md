@@ -1,4 +1,4 @@
-[] Add snippet for ProgressIndicator
-[] Ensure there's a clear difference when using Customizer vs not
-[x] Update Customizer with Button styles once release has been made
-[] Add demo for using color/text style (perhaps to bold some text)
+## Code demo script
+1. Add a component: ProgressIndicator
+1. Add Fluent styles with Customizer and Fabric Fluent styles
+1. Add Fluent styles to custom components with SCSS

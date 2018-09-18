@@ -1,19 +1,24 @@
-@import '../node_modules/office-ui-fabric-react/dist/sass/_Fabric.Common';
-// Import Fluent references
-// Demo adding a shadow
+// Import Fabric Core references.
+// To preview using the Fluent styles, make sure to use the Fluent releases.
+// e.g. "office-ui-fabric-core": "^9.6.0-fluent16"
+@import '../node_modules/office-ui-fabric-core/dist/sass/_References';
 
+// App variables
 $App-sectionPadding: 20px 28px;
 $App-border: 1px solid $ms-color-neutralLight;
 
 .App {
   background-color: rgba(255,255,255,0.75);
   border: $App-border;
-  box-shadow: 0 0 20px -4px rgba(0,0,0,0.25);
   display: flex;
   flex-direction: column;
   max-height: 90vh;
   max-width: 580px;
   width: 90vw;
+  position: relative;
+
+  // Add a Fluent-style box shadow
+  @include ms-depth-8;
 }
 
 .App-header {
@@ -23,25 +28,23 @@ $App-border: 1px solid $ms-color-neutralLight;
 }
 
 .App-title {
-  border-bottom: 1px solid #eaeaea;
   flex-grow: 0;
-  font-size: 42px;
-  font-weight: 100;
+  font-size: 28px;
+  font-weight: 600;
   margin: 0;
-  padding: 20px 28px;
-  text-align: center; }
+  padding: 20px 28px 0 28px;
+  text-align: left;
 
-.App-close {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding-top: 14px;
-  padding-right: 14px;
-  padding-bottom: 0px;
-  padding-left: 0px;}
+  // Add some Fluent text styles
+  @include ms-fontSize-28;
+  @include ms-fontWeight-semibold;
+}
+
+.App-description {
+  flex-grow: 0;
+  margin: 0;
+  padding: 0 0 20px 20px;
+}
 
 .App-main {
   display: flex;
@@ -50,14 +53,19 @@ $App-border: 1px solid $ms-color-neutralLight;
   padding: $App-sectionPadding;
 }
 
+.App-pivot {
+  display: flex;
+  padding: 0 20px;
+}
+
 .App-createTask {
   display: flex;
   flex-shrink: 0;
-  margin-bottom: 8px;
+  margin: 0 28px 10px;
 }
 
 .App-createTask-field {
-  @include margin(0, 10px, 0, 0);
+  @include ms-margin(0, 10px, 0, 0);
   flex-grow: 1;
 }
 
@@ -65,18 +73,38 @@ $App-border: 1px solid $ms-color-neutralLight;
   flex-shrink: 0;
 }
 
-
 .App-taskList {
   overflow: auto;
   flex-grow: 1;
-
+  
   .ms-Checkbox {
-    margin-bottom: 5px;
+    margin-bottom: 14px; 
   }
 }
 
+.App-task {
+  border: $App-border;
+  border-bottom: 0;
+  padding: 20px;
+  transition: box-shadow .1ms ease;
+  
+  &:last-child {
+    border-bottom: 1px solid $ms-color-gray30;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $ms-color-gray10;
+  }
+}
+
+.App-persona {
+  padding-left: 24px;
+  padding-bottom: 2px;
+}
+
 .App-footer {
-  border-top: $App-border;
   flex-grow: 0;
   padding: $App-sectionPadding;
+  padding-top: 0;
 }

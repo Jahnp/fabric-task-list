@@ -7,9 +7,8 @@ import {
   ProgressIndicator,
   Customizer,
   IconButton,
-  IPersonaSharedProps, 
-  Persona, 
-  PersonaSize, 
+  Persona,
+  PersonaSize,
   PersonaPresence,
   PersonaInitialsColor,
   Pivot,
@@ -26,10 +25,9 @@ import './App.css';
 initializeIcons();
 
 const examplePersona = {
-  secondaryText: 'Designer',
-  tertiaryText: 'In a meeting',
-  optionalText: 'Available at 4:00pm',
-  showSecondaryText: true
+  showSecondaryText: true,
+  size: PersonaSize.size32,
+  presence: PersonaPresence.online
 };
 
 class App extends Component {
@@ -44,39 +42,20 @@ class App extends Component {
     return (
       <Customizer {...FluentCustomizations}>
         <Fabric className="App">
-        <div className="App-header">
-          <div>
-            <h1 className="App-title">Team Tasks</h1>
-            <div className="App-description">
-             <TextField
-              borderless
-              placeholder="Describe your list"
-              />
+          <div className="App-header">
+            <div className="App-titleBlock">
+              <h1 className="App-title">Team Tasks</h1>
+              <div className="App-description">
+                <TextField
+                  borderless
+                  placeholder="Describe your list"
+                  />
+              </div>
             </div>
-              <IconButton
-                className='App-close'
-                iconProps={{ iconName: 'Cancel' }}
-                title="Cancel"
-                ariaLabel="Cancel"/>
-          </div>
-          <div className="App-pivot">
-            <Pivot>
-              <PivotItem
-                headerText="All Tasks"
-                linkText="I am deprecated. &quot;headerText&quot; overwrites me"
-                headerButtonProps={{
-                  'data-order': 1,
-                  'data-title': 'My Files Title'
-                }}
-                >
-              </PivotItem>
-              <PivotItem linkText="Completed">
-              </PivotItem>
-              </Pivot>
-          </div>
-        </div>
-          <div className="App-main">
             {this._renderCreateTask()}
+            {this._renderPivot()}
+          </div>
+          <div className="App-main">
             {this._renderTaskList()}
           </div>
           <div className="App-footer">
@@ -120,25 +99,29 @@ class App extends Component {
       <div className='App-taskList'>
         {
           this.state.tasks.map(
-            task => {            
+            task => {
+              let { personaProps } = task;
+              let personaArgs = { ...personaProps, ...examplePersona };
+
               return (
-                <div>
-                  <Checkbox
-                  checked={task.completed}
+                <div 
+                  className='App-task' 
                   key={task.id}
-                  label={task.title}
-                  name={task.id}
-                  onChange={(event, checked) => {
-                    console.log(task.id);
+                  onClick={() => {
                     this._toggleTaskCompleted(task.id)
-                  }} />
+                  }}
+                >
+                  <Checkbox
+                    checked={task.completed}
+                    label={task.title}
+                    name={task.id}
+                    onChange={(event, checked) => {
+                      this._toggleTaskCompleted(task.id)
+                    }}
+                  />
                   <div className="App-persona">
                     <div className="ms-PersonaExample">
-                    <Persona {...examplePersona} 
-                      initialsColor={PersonaInitialsColor.black}
-                      size={PersonaSize.size32}
-                      presence={PersonaPresence.online}
-                      text="Annie Lindqvist" />
+                    <Persona {...personaArgs} />
                     </div>
                   </div>
                 </div>
@@ -152,9 +135,32 @@ class App extends Component {
 
   _renderProgress() {
     return (
-      'Progress should go here'
+      <ProgressIndicator
+        label='Your teams progress'
+        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
+        percentComplete={this._TaskManager.getTasksPercentComplete()} />
     );
   }
+
+  _renderPivot() {
+    return(
+    <div className="App-pivot">
+      <Pivot>
+        <PivotItem
+          headerText="All Tasks"
+          linkText="I am deprecated. &quot;headerText&quot; overwrites me"
+          headerButtonProps={{
+            'data-order': 1,
+            'data-title': 'My Files Title'
+          }}
+          >
+        </PivotItem>
+        <PivotItem linkText="Completed">
+        </PivotItem>
+      </Pivot>
+    </div>
+    )
+}
 
   _addTask() {
     this._TaskManager.addTask(this.state.inputValue);

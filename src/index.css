@@ -1,3 +1,6 @@
+/*
+  Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
+*/
 html,
 body {
   height: 100%;
@@ -6,6 +9,6 @@ body {
 
 body {
   align-items: center;
-  background-image: linear-gradient(to top, #b3d6f2 0%, #ffffff 70%);
+  background-color: #faf9f8;
   display: flex;
   justify-content: center; }

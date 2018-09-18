@@ -1,20 +1,53 @@
+import { PersonaInitialsColor } from 'office-ui-fabric-react/lib/';
+
+
+const dateOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+};
+
+let yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
+const yesterdaysDate = yesterday.toLocaleDateString('en-us', dateOptions);
+
 export default class TaskManager {
   constructor() {
     this._tasks = [
       {
         id: 1,
         title: 'Wash the car',
-        completed: true
+        completed: true,
+        personaProps: {
+          text: 'Carol Poland',
+          secondaryText: `Created ${yesterdaysDate}`,
+          initialsColor: PersonaInitialsColor.darkRed,
+          imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png'
+        }
       },
       {
         id: 2,
         title: 'Get groceries',
-        completed: true
+        completed: true,
+        personaProps: {
+          text: 'Amanda Brady',
+          secondaryText: `Created ${yesterdaysDate}`,
+          initialsColor: PersonaInitialsColor.orange,
+          imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png'
+        }
       },
       {
         id: 3,
         title: 'Walk the dog',
-        completed: false
+        completed: false,
+        personaProps: {
+          text: 'Miguel Garcia',
+          secondaryText: `Created ${yesterdaysDate}`,
+          initialsColor: PersonaInitialsColor.blue,
+          imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-male.png'
+        }
       }
     ];
   }
@@ -36,11 +69,19 @@ export default class TaskManager {
   }
 
   addTask(title) {
+    let today = new Date();
+    let todaysDate = today.toLocaleDateString('en-us', dateOptions);
+    
     if (title) {
       const newTask = {
         id: this._tasks.length + 1,
         title: title,
-        completed: false
+        completed: false,
+        personaProps: {
+          text: 'Miguel Garcia',
+          secondaryText: `Created ${todaysDate}`,
+          initialsColor: PersonaInitialsColor.blue
+        },
       };
       this._tasks = this._tasks.concat(newTask);
     }

@@ -1,3 +1,5 @@
+@import '../node_modules/office-ui-fabric-core/dist/sass/_References';
+
 html,
 body {
   height: 100%;
@@ -7,7 +9,7 @@ body {
 
 body {
   align-items: center;
-  background-image: linear-gradient(to top, #b3d6f2 0%, #ffffff 70%);
+  background-color: $ms-color-gray10;
   display: flex;
   justify-content: center;
 }

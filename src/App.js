@@ -4,8 +4,6 @@ import {
   Checkbox,
   TextField,
   PrimaryButton,
-  ProgressIndicator,
-  Customizer,
   Persona,
   PersonaSize,
   PersonaPresence,
@@ -13,8 +11,6 @@ import {
   PivotItem
 } from 'office-ui-fabric-react/lib/';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import { FluentCustomizations } from '@uifabric/experiments/lib/components/fluent/FluentCustomizations';
-
 
 import TaskManager from './TaskManager';
 import './App.css';
@@ -38,29 +34,27 @@ class App extends Component {
 
   render() {
     return (
-      <Customizer {...FluentCustomizations}>
-        <Fabric className="App">
-          <div className="App-header">
-            <div className="App-titleBlock">
-              <h1 className="App-title">Team Tasks</h1>
-              <div className="App-description">
-                <TextField
-                  borderless
-                  placeholder="Describe your list"
-                  />
-              </div>
+      <Fabric className="App">
+        <div className="App-header">
+          <div className="App-titleBlock">
+            <h1 className="App-title">Team Tasks</h1>
+            <div className="App-description">
+              <TextField
+                borderless
+                placeholder="Describe your list"
+                />
             </div>
-            {this._renderCreateTask()}
-            {this._renderPivot()}
           </div>
-          <div className="App-main">
-            {this._renderTaskList()}
-          </div>
-          <div className="App-footer">
-            {this._renderProgress()}
-          </div>
-        </Fabric>
-      </Customizer>
+          {this._renderCreateTask()}
+          {this._renderPivot()}
+        </div>
+        <div className="App-main">
+          {this._renderTaskList()}
+        </div>
+        <div className="App-footer">
+          {this._renderProgress()}
+        </div>
+      </Fabric>
     );
   }
 
@@ -133,10 +127,7 @@ class App extends Component {
 
   _renderProgress() {
     return (
-      <ProgressIndicator
-        label='Your teams progress'
-        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
-        percentComplete={this._TaskManager.getTasksPercentComplete()} />
+      '[Progress goes here]'
     );
   }
 

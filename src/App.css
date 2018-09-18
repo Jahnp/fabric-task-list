@@ -1,3 +1,13 @@
+/* 
+  Import Fabric Core references.
+  To preview using the Fluent styles, make sure to use the Fluent releases.
+  For example, if you're using npm, add this to package.json:
+  {
+    "dependencies": {
+      "office-ui-fabric-core": "^9.6.0-fluent16"
+    } 
+  }
+*/
 /*
   Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
 */
@@ -9,23 +19,21 @@
   max-height: 90vh;
   max-width: 580px;
   width: 90vw;
-  position: relative;
-  box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132), 0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108); }
+  position: relative; }
 
 .App-header {
   position: relative;
   width: 100%;
   box-sizing: border-box; }
 
+.App-titleBlock {
+  margin-top: 20px; }
+
 .App-title {
   flex-grow: 0;
-  font-size: 28px;
-  font-weight: 600;
   margin: 0;
   padding: 20px 28px 0 28px;
-  text-align: left;
-  font-size: 28px;
-  font-weight: 600; }
+  text-align: left; }
 
 .App-description {
   flex-grow: 0;

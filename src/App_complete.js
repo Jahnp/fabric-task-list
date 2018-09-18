@@ -5,15 +5,28 @@ import {
   TextField,
   PrimaryButton,
   ProgressIndicator,
-  Customizer
+  Customizer,
+  Persona,
+  PersonaSize,
+  PersonaPresence,
+  Pivot,
+  PivotItem
 } from 'office-ui-fabric-react/lib/';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { FluentCustomizations } from '@uifabric/experiments/lib/components/fluent/FluentCustomizations';
 
+
 import TaskManager from './TaskManager';
 import './App.css';
 
+
 initializeIcons();
+
+const examplePersona = {
+  showSecondaryText: true,
+  size: PersonaSize.size32,
+  presence: PersonaPresence.online
+};
 
 class App extends Component {
   _TaskManager = new TaskManager();
@@ -27,9 +40,20 @@ class App extends Component {
     return (
       <Customizer {...FluentCustomizations}>
         <Fabric className="App">
-          <h1 className="App-header">Task List</h1>
-          <div className="App-main">
+          <div className="App-header">
+            <div className="App-titleBlock">
+              <h1 className="App-title">Team Tasks</h1>
+              <div className="App-description">
+                <TextField
+                  borderless
+                  placeholder="Describe your list"
+                  />
+              </div>
+            </div>
             {this._renderCreateTask()}
+            {this._renderPivot()}
+          </div>
+          <div className="App-main">
             {this._renderTaskList()}
           </div>
           <div className="App-footer">
@@ -73,17 +97,32 @@ class App extends Component {
       <div className='App-taskList'>
         {
           this.state.tasks.map(
-            task => {            
+            task => {
+              let { personaProps } = task;
+              let personaArgs = { ...personaProps, ...examplePersona };
+
               return (
-                <Checkbox
-                  checked={task.completed}
+                <div 
+                  className='App-task' 
                   key={task.id}
-                  label={task.title}
-                  name={task.id}
-                  onChange={(event, checked) => {
-                    console.log(task.id);
+                  onClick={() => {
                     this._toggleTaskCompleted(task.id)
-                  }} />
+                  }}
+                >
+                  <Checkbox
+                    checked={task.completed}
+                    label={task.title}
+                    name={task.id}
+                    onChange={(event, checked) => {
+                      this._toggleTaskCompleted(task.id)
+                    }}
+                  />
+                  <div className="App-persona">
+                    <div className="ms-PersonaExample">
+                    <Persona {...personaArgs} />
+                    </div>
+                  </div>
+                </div>
               );
             }
           )
@@ -95,11 +134,31 @@ class App extends Component {
   _renderProgress() {
     return (
       <ProgressIndicator
-        label='Your progress'
+        label='Your teams progress'
         description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
         percentComplete={this._TaskManager.getTasksPercentComplete()} />
     );
   }
+
+  _renderPivot() {
+    return(
+    <div className="App-pivot">
+      <Pivot>
+        <PivotItem
+          headerText="All Tasks"
+          linkText="I am deprecated. &quot;headerText&quot; overwrites me"
+          headerButtonProps={{
+            'data-order': 1,
+            'data-title': 'My Files Title'
+          }}
+          >
+        </PivotItem>
+        <PivotItem linkText="Completed">
+        </PivotItem>
+      </Pivot>
+    </div>
+    )
+}
 
   _addTask() {
     this._TaskManager.addTask(this.state.inputValue);

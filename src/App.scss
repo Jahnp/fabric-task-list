@@ -26,6 +26,7 @@ $App-border: 1px solid $ms-color-neutralLight;
   position: relative;
 
   // Use a Fabric Core depth mixin to add a Fluent drop shadow.
+  // Refer to https://fluentfabric.azurewebsites.net/#/depth for more details.
   // @include ms-depth-8;
 }
 
@@ -46,6 +47,7 @@ $App-border: 1px solid $ms-color-neutralLight;
   text-align: left;
 
   // Use Fabric Core Typography mixins to add Fluent text styles.
+  // Refer to https://fluentfabric.azurewebsites.net/#/typography for more details.
   // @include ms-fontSize-28;
   // @include ms-fontWeight-semibold;
 }

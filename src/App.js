@@ -6,11 +6,9 @@ import {
   PrimaryButton,
   ProgressIndicator,
   Customizer,
-  IconButton,
   Persona,
   PersonaSize,
   PersonaPresence,
-  PersonaInitialsColor,
   Pivot,
   PivotItem
 } from 'office-ui-fabric-react/lib/';

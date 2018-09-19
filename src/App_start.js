@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import {
   Fabric,
+  DefaultButton,
+  IconButton,
   Checkbox,
+  Dialog,
+  DialogType,
+  DialogFooter,
   TextField,
   PrimaryButton,
   Persona,
@@ -29,7 +34,9 @@ class App extends Component {
 
   state = {
     tasks: this._TaskManager._tasks,
-    inputValue: ''
+    inputValue: '',
+    hideDeleteDialog: true,
+    taskToDelete: null
   }
 
   render() {
@@ -54,6 +61,7 @@ class App extends Component {
         <div className="App-footer">
           {this._renderProgress()}
         </div>
+        {this._renderDeleteDialog()}
       </Fabric>
     );
   }
@@ -116,6 +124,16 @@ class App extends Component {
                     <Persona {...personaArgs} />
                     </div>
                   </div>
+                  <IconButton
+                    className='App-deleteTask'
+                    iconProps={{ iconName: 'Delete' }}
+                    title="Delete task"
+                    ariaLabel="Delete task"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      this._confirmDeleteTask(task.id)
+                    }}
+                  />
                 </div>
               );
             }
@@ -149,7 +167,35 @@ class App extends Component {
       </Pivot>
     </div>
     )
-}
+  }
+
+  _renderDeleteDialog() {
+    return (
+      <Dialog
+        hidden={this.state.hideDeleteDialog}
+        onDismiss={this._closeDeleteDialog}
+        dialogContentProps={{
+          type: DialogType.normal,
+          title: "Delete task",
+          subText:
+            "Are you sure you want to delete this task? This cannot be undone."
+        }}
+        modalProps={{
+          isBlocking: false
+        }}
+      >
+        <DialogFooter>
+          <PrimaryButton
+            onClick={() => {
+              this._handleConfirmDeleteClick(this.state.taskToDelete)
+            }}
+            text="Ok"
+          />
+          <DefaultButton onClick={() => this._handleCancelDeleteClick()} text="Cancel" />
+        </DialogFooter>
+      </Dialog>
+    );
+  }
 
   _addTask() {
     this._TaskManager.addTask(this.state.inputValue);
@@ -166,6 +212,37 @@ class App extends Component {
     this.setState({
       tasks: this._TaskManager.getTasks()
     });
+  }
+
+  _confirmDeleteTask(taskId) {
+    this._showDeleteDialog();
+    
+    this.setState({
+      taskToDelete: taskId
+    });
+  }
+  
+  _showDeleteDialog = () => {
+    this.setState({ hideDeleteDialog: false });
+  };
+  
+  _closeDeleteDialog = () => {
+    this.setState({ hideDeleteDialog: true });
+  };
+  
+  _handleConfirmDeleteClick(taskId) {
+    this._TaskManager.deleteTask(taskId);
+
+    this.setState({
+      taskToDelete: null,
+      tasks: this._TaskManager.getTasks()
+    });
+
+    this._closeDeleteDialog();
+  }
+
+  _handleCancelDeleteClick() {
+    this._closeDeleteDialog();
   }
 }
 

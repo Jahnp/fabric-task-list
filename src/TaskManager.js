@@ -89,7 +89,29 @@ export default class TaskManager {
 
   toggleTaskCompleted(taskId) {
     const updatedTasks = this._tasks;
-    updatedTasks[taskId - 1].completed = !this._tasks[taskId - 1].completed;
+
+    updatedTasks.forEach((task, index) => {
+      let { id, completed } = task;
+
+      if (id === taskId) {
+        updatedTasks[index].completed = !completed;
+      }
+    });
+
+    this._tasks = updatedTasks;
+  }
+  
+  deleteTask(taskId) {
+    let updatedTasks = this._tasks.slice();
+    
+    updatedTasks.forEach((task, index) => {
+      let { id } = task;
+      
+      if (id === taskId) {
+        updatedTasks.splice(index, 1);
+      }
+    });
+  
     this._tasks = updatedTasks;
   }
 }

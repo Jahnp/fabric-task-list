@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import {
   Fabric,
+  DefaultButton,
+  IconButton,
   Checkbox,
+  Dialog,
+  DialogType,
+  DialogFooter,
   TextField,
   PrimaryButton,
-  ProgressIndicator,
-  Customizer,
   Persona,
   PersonaSize,
   PersonaPresence,
   Pivot,
-  PivotItem
+  PivotItem,
+  ProgressIndicator
 } from 'office-ui-fabric-react/lib/';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import { FluentCustomizations } from '@uifabric/experiments/lib/components/fluent/FluentCustomizations';
-
 
 import TaskManager from './TaskManager';
 import './App.css';
@@ -33,34 +35,35 @@ class App extends Component {
 
   state = {
     tasks: this._TaskManager._tasks,
-    inputValue: ''
+    inputValue: '',
+    hideDeleteDialog: true,
+    taskToDelete: null
   }
 
   render() {
     return (
-      <Customizer {...FluentCustomizations}>
-        <Fabric className="App">
-          <div className="App-header">
-            <div className="App-titleBlock">
-              <span className="App-title">Team Tasks</span>
-              <div className="App-description">
-                <TextField
-                  borderless
-                  placeholder="Describe your list"
-                  />
-              </div>
+      <Fabric className="App">
+        <div className="App-header">
+          <div className="App-titleBlock">
+            <span className="App-title">Team Tasks</span>
+            <div className="App-description">
+              <TextField
+                borderless
+                placeholder="Describe your list"
+                />
             </div>
-            {this._renderCreateTask()}
-            {this._renderPivot()}
           </div>
-          <div className="App-main">
-            {this._renderTaskList()}
-          </div>
-          <div className="App-footer">
-            {this._renderProgress()}
-          </div>
-        </Fabric>
-      </Customizer>
+          {this._renderCreateTask()}
+          {this._renderPivot()}
+        </div>
+        <div className="App-main">
+          {this._renderTaskList()}
+        </div>
+        <div className="App-footer">
+          {this._renderProgress()}
+        </div>
+        {this._renderDeleteDialog()}
+      </Fabric>
     );
   }
 
@@ -122,6 +125,16 @@ class App extends Component {
                     <Persona {...personaArgs} />
                     </div>
                   </div>
+                  <IconButton
+                    className='App-deleteTask'
+                    iconProps={{ iconName: 'Delete' }}
+                    title="Delete task"
+                    ariaLabel="Delete task"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      this._confirmDeleteTask(task.id)
+                    }}
+                  />
                 </div>
               );
             }
@@ -133,7 +146,7 @@ class App extends Component {
 
   _renderProgress() {
     return (
-      <ProgressIndicator
+    <ProgressIndicator
         label='Your teams progress'
         description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
         percentComplete={this._TaskManager.getTasksPercentComplete()} />
@@ -158,7 +171,35 @@ class App extends Component {
       </Pivot>
     </div>
     )
-}
+  }
+
+  _renderDeleteDialog() {
+    return (
+      <Dialog
+        hidden={this.state.hideDeleteDialog}
+        onDismiss={this._closeDeleteDialog}
+        dialogContentProps={{
+          type: DialogType.normal,
+          title: "Delete task",
+          subText:
+            "Are you sure you want to delete this task? This cannot be undone."
+        }}
+        modalProps={{
+          isBlocking: false
+        }}
+      >
+        <DialogFooter>
+          <PrimaryButton
+            onClick={() => {
+              this._handleConfirmDeleteClick(this.state.taskToDelete)
+            }}
+            text="Ok"
+          />
+          <DefaultButton onClick={() => this._handleCancelDeleteClick()} text="Cancel" />
+        </DialogFooter>
+      </Dialog>
+    );
+  }
 
   _addTask() {
     this._TaskManager.addTask(this.state.inputValue);
@@ -175,6 +216,37 @@ class App extends Component {
     this.setState({
       tasks: this._TaskManager.getTasks()
     });
+  }
+
+  _confirmDeleteTask(taskId) {
+    this._showDeleteDialog();
+    
+    this.setState({
+      taskToDelete: taskId
+    });
+  }
+  
+  _showDeleteDialog = () => {
+    this.setState({ hideDeleteDialog: false });
+  };
+  
+  _closeDeleteDialog = () => {
+    this.setState({ hideDeleteDialog: true });
+  };
+  
+  _handleConfirmDeleteClick(taskId) {
+    this._TaskManager.deleteTask(taskId);
+
+    this.setState({
+      taskToDelete: null,
+      tasks: this._TaskManager.getTasks()
+    });
+
+    this._closeDeleteDialog();
+  }
+
+  _handleCancelDeleteClick() {
+    this._closeDeleteDialog();
   }
 }
 

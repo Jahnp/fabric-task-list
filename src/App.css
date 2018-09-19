@@ -19,7 +19,9 @@
   max-height: 90vh;
   max-width: 580px;
   width: 90vw;
-  position: relative; }
+  position: relative;
+  overflow: auto;
+  box-shadow: 0 25.6px 57.6px 0 rgba(0, 0, 0, 0.22), 0 4.8px 14.4px 0 rgba(0, 0, 0, 0.18); }
 
 .App-header {
   position: relative;
@@ -33,7 +35,9 @@
   flex-grow: 0;
   margin: 0;
   padding: 20px 28px 0 28px;
-  text-align: left; }
+  text-align: left;
+  font-size: 28px;
+  font-weight: 600; }
 
 .App-description {
   flex-grow: 0;
@@ -74,16 +78,26 @@
   border: 1px solid #edebe9;
   border-bottom: 0;
   padding: 20px;
-  transition: box-shadow .1ms ease; }
+  transition: box-shadow .1ms ease;
+  position: relative; }
   .App-task:last-child {
     border-bottom: 1px solid #edebe9; }
   .App-task:hover {
     cursor: pointer;
     background-color: #faf9f8; }
+    .App-task:hover .App-deleteTask {
+      opacity: 1; }
 
 .App-persona {
   padding-left: 24px;
   padding-bottom: 2px; }
+
+.App-deleteTask {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  opacity: 0; }
 
 .App-footer {
   flex-grow: 0;

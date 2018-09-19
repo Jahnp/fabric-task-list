@@ -25,10 +25,6 @@ $App-border: 1px solid $ms-color-neutralLight;
   width: 90vw;
   position: relative;
   overflow: auto;
-
-  // Use a Fabric Core depth mixin to add a Fluent drop shadow.
-  // Refer to https://fluentfabric.azurewebsites.net/#/depth for more details.
-  // @include ms-depth-64;
 }
 
 .App-header {

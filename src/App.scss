@@ -25,6 +25,7 @@ $App-border: 1px solid $ms-color-neutralLight;
   width: 90vw;
   position: relative;
   overflow: auto;
+  @include ms-depth-8;
 }
 
 .App-header {

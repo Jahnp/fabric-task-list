@@ -13,9 +13,12 @@ import {
   PersonaSize,
   PersonaPresence,
   Pivot,
-  PivotItem
+  PivotItem,
+  Customizer
 } from "office-ui-fabric-react/lib/";
 import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
+
+import { FluentCustomizations } from "@uifabric/fluent-theme";
 
 import TaskManager from "./TaskManager";
 import "./App.css";
@@ -40,21 +43,23 @@ class App extends Component {
 
   render() {
     return (
-      <Fabric className="App">
-        <div className="App-header">
-          <div className="App-titleBlock">
-            <span className="App-title">Team Tasks</span>
-            <div className="App-description">
-              <TextField borderless placeholder="Describe your list" />
+      <Customizer {...FluentCustomizations}>
+        <Fabric className="App">
+          <div className="App-header">
+            <div className="App-titleBlock">
+              <span className="App-title">Team Tasks</span>
+              <div className="App-description">
+                <TextField borderless placeholder="Describe your list" />
+              </div>
             </div>
+            {this._renderCreateTask()}
+            {this._renderPivot()}
           </div>
-          {this._renderCreateTask()}
-          {this._renderPivot()}
-        </div>
-        <div className="App-main">{this._renderTaskList()}</div>
-        <div className="App-footer">{this._renderProgress()}</div>
-        {this._renderDeleteDialog()}
-      </Fabric>
+          <div className="App-main">{this._renderTaskList()}</div>
+          <div className="App-footer">{this._renderProgress()}</div>
+          {this._renderDeleteDialog()}
+        </Fabric>
+      </Customizer>
     );
   }
 

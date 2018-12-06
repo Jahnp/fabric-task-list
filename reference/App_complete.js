@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Fabric,
   DefaultButton,
@@ -13,14 +13,12 @@ import {
   PersonaSize,
   PersonaPresence,
   Pivot,
-  PivotItem,
-  ProgressIndicator
-} from 'office-ui-fabric-react/lib/';
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+  PivotItem
+} from "office-ui-fabric-react/lib/";
+import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
 
-import TaskManager from './TaskManager';
-import './App.css';
-
+import TaskManager from "./TaskManager";
+import "./App.css";
 
 initializeIcons();
 
@@ -35,10 +33,10 @@ class App extends Component {
 
   state = {
     tasks: this._TaskManager._tasks,
-    inputValue: '',
+    inputValue: "",
     hideDeleteDialog: true,
     taskToDelete: null
-  }
+  };
 
   render() {
     return (
@@ -47,21 +45,14 @@ class App extends Component {
           <div className="App-titleBlock">
             <span className="App-title">Team Tasks</span>
             <div className="App-description">
-              <TextField
-                borderless
-                placeholder="Describe your list"
-                />
+              <TextField borderless placeholder="Describe your list" />
             </div>
           </div>
           {this._renderCreateTask()}
           {this._renderPivot()}
         </div>
-        <div className="App-main">
-          {this._renderTaskList()}
-        </div>
-        <div className="App-footer">
-          {this._renderProgress()}
-        </div>
+        <div className="App-main">{this._renderTaskList()}</div>
+        <div className="App-footer">{this._renderProgress()}</div>
         {this._renderDeleteDialog()}
       </Fabric>
     );
@@ -71,24 +62,24 @@ class App extends Component {
     return (
       <div className="App-createTask">
         <TextField
-          className='App-createTask-field'
-          onChange={(event) => (
+          className="App-createTask-field"
+          onChange={event =>
             this.setState({
               inputValue: event.target.defaultValue
             })
-          )}
-          onKeyDown={
-            (event) => {
-              if (event.key === 'Enter') {
-                this._addTask();
-              }
-            }
           }
-          placeholder='Add a new task'
-          value={this.state.inputValue} />
+          onKeyDown={event => {
+            if (event.key === "Enter") {
+              this._addTask();
+            }
+          }}
+          placeholder="Add a new task"
+          value={this.state.inputValue}
+        />
         <PrimaryButton
-          className='App-createTask-button'
-          onClick={() => this._addTask()}>
+          className="App-createTask-button"
+          onClick={() => this._addTask()}
+        >
           Add task
         </PrimaryButton>
       </div>
@@ -97,80 +88,69 @@ class App extends Component {
 
   _renderTaskList() {
     return (
-      <div className='App-taskList'>
-        {
-          this.state.tasks.map(
-            task => {
-              let { personaProps } = task;
-              let personaArgs = { ...personaProps, ...examplePersona };
+      <div className="App-taskList">
+        {this.state.tasks.map(task => {
+          let { personaProps } = task;
+          let personaArgs = { ...personaProps, ...examplePersona };
 
-              return (
-                <div 
-                  className='App-task' 
-                  key={task.id}
-                  onClick={() => {
-                    this._toggleTaskCompleted(task.id)
-                  }}
-                >
-                  <Checkbox
-                    checked={task.completed}
-                    label={task.title}
-                    name={task.id}
-                    onChange={(event, checked) => {
-                      this._toggleTaskCompleted(task.id)
-                    }}
-                  />
-                  <div className="App-persona">
-                    <div className="ms-PersonaExample">
-                    <Persona {...personaArgs} />
-                    </div>
-                  </div>
-                  <IconButton
-                    className='App-deleteTask'
-                    iconProps={{ iconName: 'Delete' }}
-                    title="Delete task"
-                    ariaLabel="Delete task"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      this._confirmDeleteTask(task.id)
-                    }}
-                  />
+          return (
+            <div
+              className="App-task"
+              key={task.id}
+              onClick={() => {
+                this._toggleTaskCompleted(task.id);
+              }}
+            >
+              <Checkbox
+                checked={task.completed}
+                label={task.title}
+                name={task.id}
+                onChange={(event, checked) => {
+                  this._toggleTaskCompleted(task.id);
+                }}
+              />
+              <div className="App-persona">
+                <div className="ms-PersonaExample">
+                  <Persona {...personaArgs} />
                 </div>
-              );
-            }
-          )
-        }
+              </div>
+              <IconButton
+                className="App-deleteTask"
+                iconProps={{ iconName: "Delete" }}
+                title="Delete task"
+                ariaLabel="Delete task"
+                onClick={event => {
+                  event.stopPropagation();
+                  this._confirmDeleteTask(task.id);
+                }}
+              />
+            </div>
+          );
+        })}
       </div>
     );
   }
 
   _renderProgress() {
-    return (
-    <ProgressIndicator
-        label='Your teams progress'
-        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
-        percentComplete={this._TaskManager.getTasksPercentComplete()} />
-    );
+    return "[Progress goes here]";
   }
 
   _renderPivot() {
-    return(
-    <div className="App-pivot">
-      <Pivot>
-        <PivotItem
-          headerText="All Tasks"
-          linkText="I am deprecated. &quot;headerText&quot; overwrites me"
-          headerButtonProps={{
-            'data-order': 1,
-            'data-title': 'My Files Title'
-          }}
-          >
-        </PivotItem>
-        <PivotItem linkText="Completed">
-        </PivotItem>
-      </Pivot>
-    </div>
-    )
+    return (
+      <div className="App-pivot">
+        <Pivot>
+          <PivotItem
+            headerText="All Tasks"
+            linkText='I am deprecated. "headerText" overwrites me'
+            headerButtonProps={{
+              "data-order": 1,
+              "data-title": "My Files Title"
+            }}
+          />
+          <PivotItem linkText="Completed" />
+        </Pivot>
+      </div>
+    );
   }
 
   _renderDeleteDialog() {
@@ -191,11 +171,14 @@ class App extends Component {
         <DialogFooter>
           <PrimaryButton
             onClick={() => {
-              this._handleConfirmDeleteClick(this.state.taskToDelete)
+              this._handleConfirmDeleteClick(this.state.taskToDelete);
             }}
             text="Ok"
           />
-          <DefaultButton onClick={() => this._handleCancelDeleteClick()} text="Cancel" />
+          <DefaultButton
+            onClick={() => this._handleCancelDeleteClick()}
+            text="Cancel"
+          />
         </DialogFooter>
       </Dialog>
     );
@@ -206,7 +189,7 @@ class App extends Component {
 
     this.setState({
       tasks: this._TaskManager.getTasks(),
-      inputValue: ''
+      inputValue: ""
     });
   }
 
@@ -220,20 +203,20 @@ class App extends Component {
 
   _confirmDeleteTask(taskId) {
     this._showDeleteDialog();
-    
+
     this.setState({
       taskToDelete: taskId
     });
   }
-  
+
   _showDeleteDialog = () => {
     this.setState({ hideDeleteDialog: false });
   };
-  
+
   _closeDeleteDialog = () => {
     this.setState({ hideDeleteDialog: true });
   };
-  
+
   _handleConfirmDeleteClick(taskId) {
     this._TaskManager.deleteTask(taskId);
 

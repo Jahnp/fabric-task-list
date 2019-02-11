@@ -1,6 +1,6 @@
 # Fabric Task List
 
-![Screenshot of the completed task list app](https://github.com/mikewheaton/fabric-task-list/blob/master/screenshot.png)
+![Screenshot of the completed task list app](https://raw.githubusercontent.com/Jahnp/fabric-task-list/master/screenshot.png)
 ## About this tutorial
 
 You'll be creating a simple task list using [Office UI Fabric React](http://dev.office.com/fabric). Fabric React allows you to build your application with the same components that Microsoft uses across Office and Office 365. In this tutorial, you'll use components like TextField, Checkbox, and ProgressIndicator to quickly create an application that fits seamlessly into the Office experience.

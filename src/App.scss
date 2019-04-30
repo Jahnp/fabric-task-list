@@ -1,15 +1,8 @@
 /* 
   Import Fabric Core references.
-  To preview using the Fluent styles, make sure to use the Fluent releases.
-  For example, if you're using npm, add this to package.json:
-  {
-    "dependencies": {
-      "office-ui-fabric-core": "fluent"
-    } 
-  }
 */
 
-@import '../node_modules/office-ui-fabric-core/dist/sass/_References';
+@import '~office-ui-fabric-core/dist/sass/_References';
 
 // App variables
 $App-sectionPadding: 20px 28px;
@@ -25,7 +18,6 @@ $App-border: 1px solid $ms-color-neutralLight;
   width: 90vw;
   position: relative;
   overflow: auto;
-  @include ms-depth-8;
 }
 
 .App-header {
@@ -45,7 +37,8 @@ $App-border: 1px solid $ms-color-neutralLight;
   text-align: left;
 
   // Use Fabric Core Typography mixins to add Fluent text styles.
-  // Refer to https://fluentfabric.azurewebsites.net/#/typography for more details.
+  // For more details:
+  // Refer to https://developer.microsoft.com/en-us/fabric#/styles/typography
   // @include ms-fontSize-28;
   // @include ms-fontWeight-semibold;
 }

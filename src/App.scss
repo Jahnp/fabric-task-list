@@ -9,15 +9,34 @@ $App-sectionPadding: 20px 28px;
 $App-border: 1px solid $ms-color-neutralLight;
 
 .App {
-  background-color: rgba(255,255,255,0.75);
-  border: $App-border;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow: auto;
+  height: 100%;
+}
+
+.App-sideNav,
+.App-container {
   display: flex;
   flex-direction: column;
-  max-height: 90vh;
-  max-width: 580px;
-  width: 90vw;
-  position: relative;
-  overflow: auto;
+  height: 100%;
+}
+
+.App-sideNav {
+  flex-shrink: 0;
+  max-width: 200px;
+}
+
+.Sidenav-placeholder {
+  padding: 15px;
+}
+
+.App-container {
+  background-color: rgba(255,255,255,0.75);
+  flex-grow: 1;
+  border: $App-border;
+  padding: 10px;
 }
 
 .App-header {

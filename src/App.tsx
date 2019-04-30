@@ -3,6 +3,7 @@ import {
   Fabric,
   DefaultButton,
   IconButton,
+  ContextualMenuItemType,
   Checkbox,
   Dialog,
   DialogType,
@@ -57,21 +58,23 @@ export default class App extends React.Component<IAppProps, any> {
           <div className="App-sideNav">
             <Sidenav />
           </div>
-          <div className="App-header">
-            <div className="App-titleBlock">
-              <Text variant="medium" className="App-title">
-                Team Tasks
-              </Text>
-              <div className="App-description">
-                <TextField borderless placeholder="Describe your list" />
+          <div className="App-container">
+            <div className="App-header">
+              <div className="App-titleBlock">
+                <Text variant="medium" className="App-title">
+                  Team Tasks
+                </Text>
+                <div className="App-description">
+                  <TextField borderless placeholder="Describe your list" />
+                </div>
               </div>
+              {this._renderCreateTask()}
+              {this._renderPivot()}
             </div>
-            {this._renderCreateTask()}
-            {this._renderPivot()}
+            <div className="App-main">{this._renderTaskList()}</div>
+            <div className="App-footer">{this._renderProgress()}</div>
+            {this._renderDeleteDialog()}
           </div>
-          <div className="App-main">{this._renderTaskList()}</div>
-          <div className="App-footer">{this._renderProgress()}</div>
-          {this._renderDeleteDialog()}
       </Fabric>
     );
   }
@@ -150,7 +153,7 @@ export default class App extends React.Component<IAppProps, any> {
   }
 
   _renderProgress() {
-    return ( '[Render progress here' );
+    return ( '[Render progress here]' );
   }
 
   _renderPivot() {

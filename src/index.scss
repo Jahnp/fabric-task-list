@@ -1,15 +1,23 @@
 @import '~office-ui-fabric-core/dist/sass/_References';
 
-html,
-body {
+html {
   height: 100%;
-  margin: 0;
-  padding: 0;
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 body {
-  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
   background-color: $ms-color-gray10;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
   display: flex;
-  justify-content: center;
 }

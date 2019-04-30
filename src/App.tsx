@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import {
   Fabric,
   DefaultButton,
@@ -13,12 +13,15 @@ import {
   PersonaSize,
   PersonaPresence,
   Pivot,
-  PivotItem
-} from "office-ui-fabric-react/lib/";
-import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
+  PivotItem,
+  Text,
+  initializeIcons
+} from "office-ui-fabric-react";
 
 import TaskManager from "./TaskManager";
-import "./App.css";
+import { Sidenav } from "./Sidenav";
+
+import "./App.scss";
 
 initializeIcons();
 
@@ -28,32 +31,47 @@ const examplePersona = {
   presence: PersonaPresence.online
 };
 
-class App extends Component {
-  _TaskManager = new TaskManager();
+export interface IAppProps extends React.Props<App> {}
 
-  state = {
-    tasks: this._TaskManager._tasks,
-    inputValue: "",
-    hideDeleteDialog: true,
-    taskToDelete: null
-  };
+export interface ITaskProps extends React.Props<any> {
+  personaProps?: any; id?: any; completed?: any; title?: any; 
+}
+
+export default class App extends React.Component<IAppProps, any> {
+  private _TaskManager = new TaskManager();
+
+  constructor(props: IAppProps) {
+    super(props);
+
+    this.state = {
+      tasks: this._TaskManager._tasks,
+      inputValue: "",
+      hideDeleteDialog: true,
+      taskToDelete: null
+    };
+  }
 
   render() {
     return (
       <Fabric className="App">
-        <div className="App-header">
-          <div className="App-titleBlock">
-            <span className="App-title">Team Tasks</span>
-            <div className="App-description">
-              <TextField borderless placeholder="Describe your list" />
-            </div>
+          <div className="App-sideNav">
+            <Sidenav />
           </div>
-          {this._renderCreateTask()}
-          {this._renderPivot()}
-        </div>
-        <div className="App-main">{this._renderTaskList()}</div>
-        <div className="App-footer">{this._renderProgress()}</div>
-        {this._renderDeleteDialog()}
+          <div className="App-header">
+            <div className="App-titleBlock">
+              <Text variant="medium" className="App-title">
+                Team Tasks
+              </Text>
+              <div className="App-description">
+                <TextField borderless placeholder="Describe your list" />
+              </div>
+            </div>
+            {this._renderCreateTask()}
+            {this._renderPivot()}
+          </div>
+          <div className="App-main">{this._renderTaskList()}</div>
+          <div className="App-footer">{this._renderProgress()}</div>
+          {this._renderDeleteDialog()}
       </Fabric>
     );
   }
@@ -65,7 +83,7 @@ class App extends Component {
           className="App-createTask-field"
           onChange={event =>
             this.setState({
-              inputValue: event.target.defaultValue
+              inputValue: event.currentTarget.defaultValue
             })
           }
           onKeyDown={event => {
@@ -89,7 +107,7 @@ class App extends Component {
   _renderTaskList() {
     return (
       <div className="App-taskList">
-        {this.state.tasks.map(task => {
+        {this.state.tasks.map((task: ITaskProps) => {
           let { personaProps } = task;
           let personaArgs = { ...personaProps, ...examplePersona };
 
@@ -132,7 +150,7 @@ class App extends Component {
   }
 
   _renderProgress() {
-    return "[Progress goes here]";
+    return ( '[Render progress here' );
   }
 
   _renderPivot() {
@@ -193,7 +211,7 @@ class App extends Component {
     });
   }
 
-  _toggleTaskCompleted(taskId) {
+  _toggleTaskCompleted(taskId: any) {
     this._TaskManager.toggleTaskCompleted(taskId);
 
     this.setState({
@@ -201,7 +219,7 @@ class App extends Component {
     });
   }
 
-  _confirmDeleteTask(taskId) {
+  _confirmDeleteTask(taskId: any) {
     this._showDeleteDialog();
 
     this.setState({
@@ -217,14 +235,12 @@ class App extends Component {
     this.setState({ hideDeleteDialog: true });
   };
 
-  _handleConfirmDeleteClick(taskId) {
+  _handleConfirmDeleteClick(taskId: any) {
     this._TaskManager.deleteTask(taskId);
-
     this.setState({
       taskToDelete: null,
       tasks: this._TaskManager.getTasks()
     });
-
     this._closeDeleteDialog();
   }
 
@@ -232,5 +248,3 @@ class App extends Component {
     this._closeDeleteDialog();
   }
 }
-
-export default App;

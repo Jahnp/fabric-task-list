@@ -84,11 +84,11 @@ export default class App extends React.Component<IAppProps, any> {
       <div className="App-createTask">
         <TextField
           className="App-createTask-field"
-          onChange={event =>
+          onChange={event => {
             this.setState({
-              inputValue: event.currentTarget.defaultValue
+              inputValue: (event.target as HTMLInputElement).value
             })
-          }
+          }}
           onKeyDown={event => {
             if (event.key === "Enter") {
               this._addTask();

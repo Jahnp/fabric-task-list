@@ -88,8 +88,7 @@ export default class App extends React.Component<IAppProps, any> {
             this.setState({
               inputValue: (event.target as HTMLInputElement).value
             })
-          }
-          }
+          }}
           onKeyDown={event => {
             if (event.key === "Enter") {
               this._addTask();

@@ -16,8 +16,11 @@ import {
   Pivot,
   PivotItem,
   Text,
-  initializeIcons
+  ProgressIndicator,
+  initializeIcons,
+  Customizer
 } from "office-ui-fabric-react";
+import { FluentCustomizations } from "@uifabric/fluent-theme";
 
 import TaskManager from "./TaskManager";
 import { Sidenav } from "./Sidenav";
@@ -55,13 +58,14 @@ export default class App extends React.Component<IAppProps, any> {
   render() {
     return (
       <Fabric className="App">
+        <Customizer {...FluentCustomizations}>
           <div className="App-sideNav">
             <Sidenav />
           </div>
           <div className="App-container">
             <div className="App-header">
               <div className="App-titleBlock">
-                <Text variant="medium" className="App-title">
+                <Text variant="xxLarge" className="App-title">
                   Team Tasks
                 </Text>
                 <div className="App-description">
@@ -75,6 +79,7 @@ export default class App extends React.Component<IAppProps, any> {
             <div className="App-footer">{this._renderProgress()}</div>
             {this._renderDeleteDialog()}
           </div>
+          </Customizer>
       </Fabric>
     );
   }
@@ -86,7 +91,7 @@ export default class App extends React.Component<IAppProps, any> {
           className="App-createTask-field"
           onChange={event =>
             this.setState({
-              inputValue: event.currentTarget.defaultValue
+              inputValue: (event.target as HTMLInputElement).value
             })
           }
           onKeyDown={event => {
@@ -137,12 +142,52 @@ export default class App extends React.Component<IAppProps, any> {
               </div>
               <IconButton
                 className="App-deleteTask"
-                iconProps={{ iconName: "Delete" }}
                 title="Delete task"
                 ariaLabel="Delete task"
-                onClick={event => {
-                  event.stopPropagation();
-                  this._confirmDeleteTask(task.id);
+                menuIconProps={{iconName: "More"}}
+                menuProps={{
+                  items: [
+                    {
+                      key: "addToDay",
+                      name: "Add to My Day",
+                      iconProps: {
+                        iconName: "SunAdd"
+                      }
+                    },
+                    {
+                      key: "markAsImportant",
+                      name: "Mark as important",
+                      iconProps: {
+                        iconName: "FavoriteStar"
+                      }
+                    },
+                    {
+                      key: "markAsCompleted",
+                      name: "Mark as completed",
+                      iconProps: {
+                        iconName: "CheckMark"
+                      }
+                    },
+                    {
+                      key: "setDueDate",
+                      name: "Set due date",
+                      iconProps: {
+                        iconName: "Calendar"
+                      }
+                    },
+                    {
+                      key: 'divider_1',
+                      itemType: ContextualMenuItemType.Divider
+                    },        
+                    {
+                      key: "deleteTask",
+                      name: "Delete task",
+                      iconProps: {
+                        iconName: "Delete"
+                      },
+                      onClick: () => this._confirmDeleteTask(task.id)
+                    }
+                  ]
                 }}
               />
             </div>
@@ -153,7 +198,13 @@ export default class App extends React.Component<IAppProps, any> {
   }
 
   _renderProgress() {
-    return ( '[Render progress here]' );
+    return ( 
+      <ProgressIndicator
+        label="Your teams progress"
+        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
+        percentComplete={this._TaskManager.getTasksPercentComplete()}
+      />
+     );
   }
 
   _renderPivot() {

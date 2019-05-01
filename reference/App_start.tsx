@@ -61,7 +61,7 @@ export default class App extends React.Component<IAppProps, any> {
           <div className="App-container">
             <div className="App-header">
               <div className="App-titleBlock">
-                <Text variant="medium" className="App-title">
+                <Text variant="xxLarge" className="App-title">
                   Team Tasks
                 </Text>
                 <div className="App-description">
@@ -84,10 +84,11 @@ export default class App extends React.Component<IAppProps, any> {
       <div className="App-createTask">
         <TextField
           className="App-createTask-field"
-          onChange={event =>
+          onChange={event => {
             this.setState({
-              inputValue: event.currentTarget.defaultValue
+              inputValue: (event.target as HTMLInputElement).value
             })
+          }
           }
           onKeyDown={event => {
             if (event.key === "Enter") {

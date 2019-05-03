@@ -119,7 +119,7 @@ $App-border: 1px solid $ms-color-neutralLight;
     cursor: pointer;
     background-color: $ms-color-gray10;
 
-    .App-deleteTask {
+    .App-taskActions {
       opacity: 1;
     }
   }
@@ -130,7 +130,7 @@ $App-border: 1px solid $ms-color-neutralLight;
   padding-bottom: 2px;
 }
 
-.App-deleteTask {
+.App-taskActions {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

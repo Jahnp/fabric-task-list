@@ -35,7 +35,10 @@ const examplePersona = {
 export interface IAppProps extends React.Props<App> {}
 
 export interface ITaskProps extends React.Props<any> {
-  personaProps?: any; id?: any; completed?: any; title?: any; 
+  personaProps?: any;
+  id?: any;
+  completed?: any;
+  title?: any;
 }
 
 export default class App extends React.Component<IAppProps, any> {
@@ -55,11 +58,11 @@ export default class App extends React.Component<IAppProps, any> {
   render() {
     return (
       <Fabric className="App">
-          <div className="App-sideNav">
+        <nav className="App-sideNav">
             <Sidenav />
-          </div>
+        </nav>
           <div className="App-container">
-            <div className="App-header">
+          <header className="App-header">
               <div className="App-titleBlock">
                 <Text variant="xxLarge" className="App-title">
                   Team Tasks
@@ -70,9 +73,9 @@ export default class App extends React.Component<IAppProps, any> {
               </div>
               {this._renderCreateTask()}
               {this._renderPivot()}
-            </div>
-            <div className="App-main">{this._renderTaskList()}</div>
-            <div className="App-footer">{this._renderProgress()}</div>
+          </header>
+          <main className="App-main">{this._renderTaskList()}</main>
+          <footer className="App-footer">{this._renderProgress()}</footer>
             {this._renderDeleteDialog()}
           </div>
       </Fabric>
@@ -153,7 +156,7 @@ export default class App extends React.Component<IAppProps, any> {
   }
 
   _renderProgress() {
-    return ( '[Render progress here]' );
+    return "[Render progress here]";
   }
 
   _renderPivot() {

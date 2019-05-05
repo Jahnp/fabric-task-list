@@ -35,7 +35,10 @@ const examplePersona = {
 export interface IAppProps extends React.Props<App> {}
 
 export interface ITaskProps extends React.Props<any> {
-  personaProps?: any; id?: any; completed?: any; title?: any; 
+  personaProps?: any;
+  id?: any;
+  completed?: any;
+  title?: any;
 }
 
 export default class App extends React.Component<IAppProps, any> {
@@ -55,26 +58,26 @@ export default class App extends React.Component<IAppProps, any> {
   render() {
     return (
       <Fabric className="App">
-          <div className="App-sideNav">
-            <Sidenav />
-          </div>
-          <div className="App-container">
-            <div className="App-header">
-              <div className="App-titleBlock">
-                <Text variant="xxLarge" className="App-title">
-                  Team Tasks
-                </Text>
-                <div className="App-description">
-                  <TextField borderless placeholder="Describe your list" />
-                </div>
+        <nav className="App-sideNav">
+          <Sidenav />
+        </nav>
+        <div className="App-container">
+          <header className="App-header">
+            <div className="App-titleBlock">
+              <Text variant="xxLarge" className="App-title">
+                Team Tasks
+              </Text>
+              <div className="App-description">
+                <TextField borderless placeholder="Describe your list" />
               </div>
-              {this._renderCreateTask()}
-              {this._renderPivot()}
             </div>
-            <div className="App-main">{this._renderTaskList()}</div>
-            <div className="App-footer">{this._renderProgress()}</div>
-            {this._renderDeleteDialog()}
-          </div>
+            {this._renderCreateTask()}
+            {this._renderPivot()}
+          </header>
+          <main className="App-main">{this._renderTaskList()}</main>
+          <footer className="App-footer">{this._renderProgress()}</footer>
+          {this._renderDeleteDialog()}
+        </div>
       </Fabric>
     );
   }
@@ -87,7 +90,7 @@ export default class App extends React.Component<IAppProps, any> {
           onChange={event => {
             this.setState({
               inputValue: (event.target as HTMLInputElement).value
-            })
+            });
           }}
           onKeyDown={event => {
             if (event.key === "Enter") {
@@ -153,7 +156,7 @@ export default class App extends React.Component<IAppProps, any> {
   }
 
   _renderProgress() {
-    return ( '[Render progress here]' );
+    return "[Render progress here]";
   }
 
   _renderPivot() {

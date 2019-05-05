@@ -59,25 +59,25 @@ export default class App extends React.Component<IAppProps, any> {
     return (
       <Fabric className="App">
         <nav className="App-sideNav">
-            <Sidenav />
+          <Sidenav />
         </nav>
-          <div className="App-container">
+        <div className="App-container">
           <header className="App-header">
-              <div className="App-titleBlock">
-                <Text variant="xxLarge" className="App-title">
-                  Team Tasks
-                </Text>
-                <div className="App-description">
-                  <TextField borderless placeholder="Describe your list" />
-                </div>
+            <div className="App-titleBlock">
+              <Text variant="xxLarge" className="App-title">
+                Team Tasks
+              </Text>
+              <div className="App-description">
+                <TextField borderless placeholder="Describe your list" />
               </div>
-              {this._renderCreateTask()}
-              {this._renderPivot()}
+            </div>
+            {this._renderCreateTask()}
+            {this._renderPivot()}
           </header>
           <main className="App-main">{this._renderTaskList()}</main>
           <footer className="App-footer">{this._renderProgress()}</footer>
-            {this._renderDeleteDialog()}
-          </div>
+          {this._renderDeleteDialog()}
+        </div>
       </Fabric>
     );
   }
@@ -90,7 +90,7 @@ export default class App extends React.Component<IAppProps, any> {
           onChange={event => {
             this.setState({
               inputValue: (event.target as HTMLInputElement).value
-            })
+            });
           }}
           onKeyDown={event => {
             if (event.key === "Enter") {

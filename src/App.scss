@@ -2,7 +2,7 @@
   Import Fabric Core references.
 */
 
-@import '~office-ui-fabric-core/dist/sass/_References';
+@import "~office-ui-fabric-core/dist/sass/_References";
 
 // App variables
 $App-sectionPadding: 20px 28px;
@@ -33,7 +33,7 @@ $App-border: 1px solid $ms-color-neutralLight;
 }
 
 .App-container {
-  background-color: rgba(255,255,255,0.75);
+  background-color: rgba(255, 255, 255, 0.75);
   flex-grow: 1;
   border: $App-border;
   padding: 10px;
@@ -58,8 +58,7 @@ $App-border: 1px solid $ms-color-neutralLight;
   // Use Fabric Core Typography mixins to add Fluent text styles.
   // For more details:
   // Refer to https://developer.microsoft.com/en-us/fabric#/styles/typography
-  // @include ms-fontSize-28;
-  // @include ms-fontWeight-semibold;
+  @include ms-fontWeight-semibold;
 }
 
 .App-description {
@@ -98,9 +97,9 @@ $App-border: 1px solid $ms-color-neutralLight;
 .App-taskList {
   overflow: auto;
   flex-grow: 1;
-  
+
   .ms-Checkbox {
-    margin-bottom: 14px; 
+    margin-bottom: 14px;
   }
 }
 
@@ -108,9 +107,9 @@ $App-border: 1px solid $ms-color-neutralLight;
   border: $App-border;
   border-bottom: 0;
   padding: 20px;
-  transition: box-shadow .1ms ease;
+  transition: box-shadow 0.1ms ease;
   position: relative;
-  
+
   &:last-child {
     border-bottom: 1px solid $ms-color-gray30;
   }

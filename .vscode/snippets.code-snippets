@@ -126,11 +126,12 @@
   "Progress_Indicator": {
     "prefix": "progress_indicator",
     "body": [
-      "<ProgressIndicator",
-      "  label=\"Your team's progress\"",
-      "  description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}",
-      "  percentComplete={this._TaskManager.getTasksPercentComplete()}",
-      "/>"
+      "    <ProgressIndicator",
+      "      label=\"Your team's progress\"",
+      "      description={`${props.completed} of ${props.total} tasks completed`}",
+      "      percentComplete={props.percentComplete}",
+      "    />",
+      ""
     ],
     "description": "Progress_Indicator"
   }

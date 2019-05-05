@@ -21,6 +21,7 @@ import {
 
 import TaskManager from "./TaskManager";
 import { Sidenav } from "./Sidenav";
+import { Progress } from "./Progress";
 
 import "./App.scss";
 
@@ -75,7 +76,13 @@ export default class App extends React.Component<IAppProps, any> {
             {this._renderPivot()}
           </header>
           <main className="App-main">{this._renderTaskList()}</main>
-          <footer className="App-footer">{this._renderProgress()}</footer>
+          <footer className="App-footer">
+            <Progress
+              completed={this._TaskManager.getCompletedTaskCount()}
+              total={this._TaskManager.getTaskCount()}
+              percentComplete={this._TaskManager.getTasksPercentComplete()}
+            />
+          </footer>
           {this._renderDeleteDialog()}
         </div>
       </Fabric>
@@ -139,7 +146,7 @@ export default class App extends React.Component<IAppProps, any> {
                 </div>
               </div>
               <IconButton
-                className="App-deleteTask"
+                className="App-taskActions"
                 iconProps={{ iconName: "Delete" }}
                 title="Delete task"
                 ariaLabel="Delete task"
@@ -153,10 +160,6 @@ export default class App extends React.Component<IAppProps, any> {
         })}
       </div>
     );
-  }
-
-  _renderProgress() {
-    return "[Render progress here]";
   }
 
   _renderPivot() {

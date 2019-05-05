@@ -16,14 +16,15 @@ import {
   Pivot,
   PivotItem,
   Text,
-  ProgressIndicator,
   initializeIcons,
+  ProgressIndicator,
   Customizer
 } from "office-ui-fabric-react";
 import { FluentCustomizations } from "@uifabric/fluent-theme";
 
 import TaskManager from "./TaskManager";
 import { Sidenav } from "./Sidenav";
+import { Progress } from "./Progress";
 
 import "./App.scss";
 
@@ -38,7 +39,10 @@ const examplePersona = {
 export interface IAppProps extends React.Props<App> {}
 
 export interface ITaskProps extends React.Props<any> {
-  personaProps?: any; id?: any; completed?: any; title?: any; 
+  personaProps?: any;
+  id?: any;
+  completed?: any;
+  title?: any;
 }
 
 export default class App extends React.Component<IAppProps, any> {
@@ -59,11 +63,11 @@ export default class App extends React.Component<IAppProps, any> {
     return (
       <Fabric className="App">
         <Customizer {...FluentCustomizations}>
-          <div className="App-sideNav">
+          <nav className="App-sideNav">
             <Sidenav />
-          </div>
+          </nav>
           <div className="App-container">
-            <div className="App-header">
+            <header className="App-header">
               <div className="App-titleBlock">
                 <Text variant="xxLarge" className="App-title">
                   Team Tasks
@@ -74,12 +78,18 @@ export default class App extends React.Component<IAppProps, any> {
               </div>
               {this._renderCreateTask()}
               {this._renderPivot()}
-            </div>
-            <div className="App-main">{this._renderTaskList()}</div>
-            <div className="App-footer">{this._renderProgress()}</div>
+            </header>
+            <main className="App-main">{this._renderTaskList()}</main>
+            <footer className="App-footer">
+              <Progress
+                completed={this._TaskManager.getCompletedTaskCount()}
+                total={this._TaskManager.getTaskCount()}
+                percentComplete={this._TaskManager.getTasksPercentComplete()}
+              />
+            </footer>
             {this._renderDeleteDialog()}
           </div>
-          </Customizer>
+        </Customizer>
       </Fabric>
     );
   }
@@ -92,7 +102,7 @@ export default class App extends React.Component<IAppProps, any> {
           onChange={event => {
             this.setState({
               inputValue: (event.target as HTMLInputElement).value
-            })
+            });
           }}
           onKeyDown={event => {
             if (event.key === "Enter") {
@@ -141,10 +151,10 @@ export default class App extends React.Component<IAppProps, any> {
                 </div>
               </div>
               <IconButton
-                className="App-deleteTask"
-                title="Delete task"
-                ariaLabel="Delete task"
-                menuIconProps={{iconName: "More"}}
+                className="App-taskActions"
+                title="Show actions"
+                ariaLabel="Show actions"
+                menuIconProps={{ iconName: "More" }}
                 menuProps={{
                   items: [
                     {
@@ -176,9 +186,9 @@ export default class App extends React.Component<IAppProps, any> {
                       }
                     },
                     {
-                      key: 'divider_1',
+                      key: "divider_1",
                       itemType: ContextualMenuItemType.Divider
-                    },        
+                    },
                     {
                       key: "deleteTask",
                       name: "Delete task",
@@ -195,16 +205,6 @@ export default class App extends React.Component<IAppProps, any> {
         })}
       </div>
     );
-  }
-
-  _renderProgress() {
-    return ( 
-      <ProgressIndicator
-        label="Your teams progress"
-        description={`${this._TaskManager.getCompletedTaskCount()} of ${this._TaskManager.getTaskCount()} tasks completed`}
-        percentComplete={this._TaskManager.getTasksPercentComplete()}
-      />
-     );
   }
 
   _renderPivot() {

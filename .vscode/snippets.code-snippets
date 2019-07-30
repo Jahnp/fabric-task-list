@@ -134,5 +134,10 @@
       ""
     ],
     "description": "Progress_Indicator"
+  },
+  "ProgressIndicator_Imports": {
+    "prefix": "progress_imports",
+    "body": ["import { ProgressIndicator } from \"office-ui-fabric-react\";"],
+    "description": "ProgressIndicator_Imports"
   }
 }
